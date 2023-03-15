@@ -1,5 +1,6 @@
 kienkien
 kienkien dong 2
+kienkienkien
 Code 1 :
 import RPi.GPIO as GPIO  
 import time
