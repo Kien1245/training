@@ -1,0 +1,132 @@
+Code 1 :
+import RPi.GPIO as GPIO  
+import time
+#Nhan nut Led ON , nha nut Led Off
+GPIO.setmode(GPIO.BOARD)  
+
+GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)   
+
+GPIO.setup(18, GPIO.OUT)   
+
+try:
+
+    while True:
+
+         buttonstate = GPIO.input(16)
+
+         if buttonstate == False:
+
+             GPIO.output(18, True)
+
+             print('Nut da dc nhan')
+
+             time.sleep(0.2)
+
+         else:
+             
+
+             GPIO.output(18, False)
+
+except:
+
+    GPIO.cleanup()
+
+=> Nhấn nút thì Led On , nhả nút Led Off
+
+Code 2 :
+import RPi.GPIO as GPIO  
+import time
+#Nhan giu Led Nhay
+GPIO.setmode(GPIO.BOARD)  
+
+GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)   
+
+GPIO.setup(18, GPIO.OUT)   
+
+try:
+
+    while True:
+
+         buttonstate = GPIO.input(16)
+
+         if buttonstate == False:
+
+             GPIO.output(18, True)
+
+             print('Nut da dc nhan')
+
+             time.sleep(0.2)
+             GPIO.output(18, False)
+             time.sleep(0.2)
+
+         else:
+             
+
+             GPIO.output(18, False)
+
+except:
+
+    GPIO.cleanup()
+=> Nhấn giữ thì Led tiếp tục nháy
+
+Code 3:
+
+import RPi.GPIO as GPIO
+from time import sleep
+GPIO.setmode(GPIO.BCM)
+#Nhan giu Led ngung nhay
+ledPin = 24
+bttnPin = 23
+
+GPIO.setup(ledPin,GPIO.OUT)
+GPIO.setup(bttnPin, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+buttonPress = True
+
+while True:
+    bttnPress = GPIO.input(bttnPin)
+    if bttnPress == False:
+        GPIO.output(ledPin, True)
+        sleep(0.5)
+    elif bttnPress == True:
+        GPIO.output(ledPin, GPIO.HIGH)
+        sleep(0.5)
+        GPIO.output(ledPin, GPIO.LOW)
+        sleep(0.5)
+=> Nhấn giữ Led ngừng nháy
+
+Code 4 :
+
+import RPi.GPIO as GPIO
+from time import sleep
+#Chinh do sang cua led bang nut nhan 
+ledPin = 18
+brightenButton = 16
+dimButton = 22
+ 
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(ledPin, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(brightenButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(dimButton, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+pwmLEDPin = GPIO.PWM(ledPin, 100)
+pwmLEDPin.start(0)
+dutyCycle = 100
+GPIO.output(ledPin, GPIO.HIGH)
+ 
+while True:
+        pwmLEDPin.ChangeDutyCycle(dutyCycle)
+        if GPIO.input(brightenButton) == GPIO.HIGH:
+                print("Button tang do sang HIGH")
+                if dutyCycle < 100:
+                        dutyCycle += 5
+                        sleep(0.25)
+                else: dutyCycle = 100
+        elif GPIO.input(dimButton) == GPIO.HIGH:
+                print("Button giam do sang HIGH")
+                if dutyCycle > 0:
+                        dutyCycle -= 5
+                        sleep(0.25)
+                else: dutyCycle = 0
+=> 2 nút , 1 nút nhấn giữ tăng độ sáng còn lại thì giảm
+
+
