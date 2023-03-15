@@ -129,4 +129,4 @@ while True:
                 else: dutyCycle = 0
 => 2 nút , 1 nút nhấn giữ tăng độ sáng còn lại thì giảm
 
-
+them
